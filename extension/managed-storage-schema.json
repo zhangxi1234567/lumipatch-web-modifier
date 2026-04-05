@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "workspaceName": {
+      "type": "string",
+      "title": "Workspace name"
+    },
+    "baseUrl": {
+      "type": "string",
+      "title": "Anthropic-compatible base URL"
+    },
+    "apiKey": {
+      "type": "string",
+      "title": "API key"
+    },
+    "model": {
+      "type": "string",
+      "title": "Model alias"
+    },
+    "systemPrompt": {
+      "type": "string",
+      "title": "Extra system instructions"
+    },
+    "maxTokens": {
+      "type": "integer",
+      "title": "Maximum output tokens",
+      "minimum": 1
+    },
+    "pageBodyMaxChars": {
+      "type": "integer",
+      "title": "Maximum page body characters to capture",
+      "minimum": 500,
+      "maximum": 20000
+    },
+    "autoPreviewGeneratedRules": {
+      "type": "boolean",
+      "title": "Auto-preview generated rules"
+    },
+    "enableMutationObserver": {
+      "type": "boolean",
+      "title": "Re-apply rules after DOM changes"
+    }
+  }
+}

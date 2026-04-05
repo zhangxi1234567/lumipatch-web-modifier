@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Web Modifier Settings</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">Extension Settings</p>
+        <h1>Claude Web Modifier</h1>
+        <p class="lede">
+          Configure a Claude-compatible endpoint, choose a model, and tune how much page context
+          is captured when generating webpage modification rules.
+        </p>
+      </header>
+
+      <form id="settings-form" class="settings-card">
+        <label>
+          <span>Workspace Name</span>
+          <input id="workspace-name" name="workspaceName" type="text" required>
+        </label>
+
+        <label>
+          <span>Connection Preset</span>
+          <select id="connection-preset" name="connectionPreset">
+            <option value="notion-proxy">Grok Proxy (Current Default)</option>
+            <option value="custom">Custom</option>
+          </select>
+          <small class="field-hint">
+            Choosing a preset fills the endpoint, API key, and model for you. You can still edit
+            those fields manually afterward.
+          </small>
+        </label>
+
+        <label>
+          <span>Base URL</span>
+          <input id="base-url" name="baseUrl" type="url" required>
+        </label>
+
+        <label>
+          <span>API Key</span>
+          <input id="api-key" name="apiKey" type="password" required>
+        </label>
+
+        <label>
+          <span>Model</span>
+          <input id="model" name="model" type="text" required>
+        </label>
+
+        <label>
+          <span>Max Tokens</span>
+          <input id="max-tokens" name="maxTokens" type="number" min="1" step="1" required>
+        </label>
+
+        <label>
+          <span>Extra System Instructions</span>
+          <textarea id="system-prompt" name="systemPrompt" rows="6"></textarea>
+        </label>
+
+        <label>
+          <span>Page Body Character Limit</span>
+          <input id="page-body-max-chars" name="pageBodyMaxChars" type="number" min="500" step="100" required>
+        </label>
+
+        <label>
+          <span>Auto-preview generated rules</span>
+          <input id="auto-preview-generated-rules" name="autoPreviewGeneratedRules" type="checkbox">
+        </label>
+
+        <label>
+          <span>Re-apply rules when the page DOM changes</span>
+          <input id="enable-mutation-observer" name="enableMutationObserver" type="checkbox">
+        </label>
+
+        <div class="actions">
+          <button id="reset-defaults" class="ghost-button" type="button">Reset Defaults</button>
+          <button class="primary-button" type="submit">Save Settings</button>
+        </div>
+      </form>
+
+      <section id="status" class="status-card" aria-live="polite"></section>
+    </main>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

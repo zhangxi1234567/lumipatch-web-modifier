@@ -1,0 +1,157 @@
+:root {
+  font-family: "Segoe UI", "SF Pro Display", "Helvetica Neue", sans-serif;
+  color: #132238;
+  background:
+    radial-gradient(circle at top right, rgba(24, 117, 91, 0.2), transparent 30%),
+    linear-gradient(180deg, #f7faf8 0%, #eef5f2 100%);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+  display: grid;
+  gap: 20px;
+}
+
+.hero,
+.settings-card,
+.status-card {
+  border-radius: 24px;
+  border: 1px solid rgba(38, 83, 69, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(24, 52, 44, 0.08);
+}
+
+.hero,
+.status-card {
+  padding: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #477669;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.lede {
+  margin: 0;
+  line-height: 1.6;
+  color: #466459;
+}
+
+.settings-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+}
+
+label span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #26483f;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid rgba(38, 83, 69, 0.18);
+  border-radius: 14px;
+  padding: 12px;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  background: rgba(249, 253, 250, 0.95);
+}
+
+input[data-managed="true"],
+select[data-managed="true"],
+textarea[data-managed="true"] {
+  background: rgba(230, 238, 234, 0.95);
+  border-style: dashed;
+  color: #4d675f;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: 2px solid #2f8f73;
+  outline-offset: 2px;
+}
+
+.field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #55736a;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.primary-button,
+.ghost-button {
+  border-radius: 999px;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 0;
+  color: #fff;
+  background: linear-gradient(135deg, #23745c, #195445);
+}
+
+.ghost-button {
+  border: 1px solid rgba(38, 83, 69, 0.18);
+  background: rgba(248, 252, 249, 0.95);
+  color: #23453b;
+}
+
+.status-card {
+  min-height: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #2c5146;
+}
+
+.status-card[data-tone="error"] {
+  color: #8a2c3b;
+  background: rgba(255, 242, 245, 0.92);
+}
+
+.status-card[data-tone="success"] {
+  color: #0e5f48;
+  background: rgba(239, 255, 246, 0.92);
+}

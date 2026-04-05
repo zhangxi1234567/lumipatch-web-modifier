@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Claude Web Modifier",
+  "version": "0.1.0",
+  "description": "Right-click on a normal webpage to open an inline AI popup and modify the clicked content with a Claude-compatible endpoint.",
+  "permissions": ["storage", "tabs", "scripting", "unlimitedStorage"],
+  "host_permissions": ["<all_urls>"],
+  "storage": {
+    "managed_schema": "extension/managed-storage-schema.json"
+  },
+  "background": {
+    "service_worker": "extension/background.js",
+    "type": "module"
+  },
+  "options_page": "extension/options.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["extension/content-script.js"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ]
+}

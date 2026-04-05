@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Web Modifier</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar-panel">
+        <header class="sidebar-top">
+          <div class="sidebar-brand">
+            <div class="brand-mark" aria-hidden="true">M</div>
+            <div class="brand-copy">
+              <p class="eyebrow">Any-site modifier</p>
+              <h1 id="workspace-title">Claude Web Modifier</h1>
+            </div>
+          </div>
+
+          <div class="sidebar-actions">
+            <button id="refresh-site" class="ghost-button ghost-button--small" type="button">
+              刷新
+            </button>
+            <button id="open-options" class="ghost-button ghost-button--small" type="button">
+              设置
+            </button>
+          </div>
+        </header>
+
+        <section class="sidebar-section">
+          <p class="section-label">当前网站</p>
+          <div class="site-card">
+            <p id="site-title" class="site-title">No site selected</p>
+            <p id="site-hostname" class="site-hostname">-</p>
+            <p id="site-url" class="site-url">Open a normal website to start.</p>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <p class="section-label">已保存效果</p>
+          <div id="saved-rules-empty" class="empty-card">这个网站还没有保存过效果。</div>
+          <div id="saved-rules-list" class="rule-list" hidden></div>
+          <div class="sidebar-tools">
+            <button id="preview-saved" class="ghost-button ghost-button--small" type="button">
+              预览已保存
+            </button>
+            <button id="delete-saved" class="ghost-button ghost-button--small" type="button">
+              删除已保存
+            </button>
+            <button id="clear-preview" class="ghost-button ghost-button--small" type="button">
+              清除预览
+            </button>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <p class="section-label">规则管理</p>
+          <div class="management-card">
+            <div class="management-actions" aria-label="Rule history actions">
+              <button id="undo-saved" class="ghost-button ghost-button--small" type="button">
+                撤销
+              </button>
+              <button id="redo-saved" class="ghost-button ghost-button--small" type="button">
+                重做
+              </button>
+              <button id="export-saved" class="ghost-button ghost-button--small" type="button">
+                导出
+              </button>
+              <button id="import-saved" class="ghost-button ghost-button--small" type="button">
+                导入
+              </button>
+            </div>
+            <input id="import-file-input" type="file" accept="application/json,.json" hidden>
+            <div id="saved-history-meta" class="management-meta">
+              <div class="meta-row">
+                <span class="meta-key">历史记录</span>
+                <span class="meta-value">你可以随时撤销或重做，不怕改坏。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">备份迁移</span>
+                <span class="meta-value">导出后可在别的浏览器或电脑里继续用。</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <p class="section-label">主题模板</p>
+          <div class="template-card">
+            <label class="template-label" for="theme-template-select">选择一套页面主题</label>
+            <input
+              id="theme-template-search"
+              class="template-search"
+              type="search"
+              placeholder="搜索模板（名称 / ID）"
+              autocomplete="off"
+            />
+            <select id="theme-template-tone" class="template-tone-filter">
+              <option value="all">全部模板</option>
+              <option value="light">仅浅色</option>
+              <option value="dark">仅深色</option>
+            </select>
+            <select id="theme-template-select" class="template-select"></select>
+            <div class="template-actions">
+              <button id="preview-theme-template" class="ghost-button ghost-button--small" type="button">
+                预览主题
+              </button>
+              <button id="save-theme-template" class="ghost-button ghost-button--small" type="button">
+                保存主题
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <footer class="sidebar-meta">
+          <div class="meta-row">
+            <span class="meta-key">模型</span>
+            <span id="model-pill" class="meta-value">-</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-key">接口</span>
+            <span id="endpoint-pill" class="meta-value">-</span>
+          </div>
+        </footer>
+      </aside>
+
+      <section class="workspace-panel">
+        <header class="workspace-header">
+          <div>
+            <p class="section-label">直接说需求</p>
+            <h2>告诉 AI 你想怎么改</h2>
+          </div>
+        </header>
+
+        <form id="generator-form" class="composer">
+          <label class="visually-hidden" for="prompt">Instruction</label>
+          <textarea
+            id="prompt"
+            rows="4"
+            placeholder="例如：把背景改深色，把按钮改成橙色，把这里的标题改成立即下载"
+          ></textarea>
+
+          <div class="composer-footer">
+            <button id="generate-button" class="primary-button" type="submit">直接修改</button>
+            <button id="preview-generated" class="ghost-button" type="button">
+              先预览
+            </button>
+            <button id="save-generated" class="ghost-button" type="button">
+              永久保存
+            </button>
+          </div>
+        </form>
+
+        <section id="status" class="status-card" aria-live="polite" hidden></section>
+
+        <section class="result-grid">
+          <article class="result-card">
+            <div class="card-head">
+              <div>
+                <p class="section-label">AI 准备这样改</p>
+                <h3>修改方案</h3>
+              </div>
+              <span id="generated-count" class="counter-pill">0 处</span>
+            </div>
+
+            <p id="generated-summary" class="generated-summary">
+              AI 会先理解你的话，再直接把网页改出来。
+            </p>
+            <div id="generated-rules-empty" class="empty-card">直接输入你想怎么改，然后点“直接修改”。</div>
+            <div id="generated-rules-list" class="rule-list" hidden></div>
+          </article>
+
+          <article class="result-card">
+            <div class="card-head">
+              <div>
+                <p class="section-label">AI 理解</p>
+                <h3>简单说明</h3>
+              </div>
+            </div>
+
+            <div id="assistant-output" class="assistant-output">这里会用人话告诉你 AI 准备怎么改，不再显示 JSON。</div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <template id="rule-item-template">
+      <article class="rule-item">
+        <div class="rule-item-head">
+          <span class="rule-type"></span>
+          <span class="rule-selector"></span>
+        </div>
+        <p class="rule-label"></p>
+        <p class="rule-meta"></p>
+      </article>
+    </template>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
